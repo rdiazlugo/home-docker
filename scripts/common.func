@@ -8,6 +8,7 @@ deb_upgrade() {
   echo ">> Updating OS"
   apt update &>/dev/null
   apt upgrade -y &>/dev/null
+  apt autoremove -y &>/dev/null
   echo "<< OS Updated successfully!"
 }
 
@@ -46,7 +47,7 @@ set_reboot_cron() {
 podman_install() {
   echo ">> Installing Podman"
   deb_upgrade
-  apt install -y podman docker-compose &>/dev/null
+  apt install -y podman &>/dev/null
   echo "<< Podman installed!"
 }
 
