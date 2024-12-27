@@ -1,17 +1,14 @@
 variables() {
   LC_APP=$(echo ${APP,,} | tr -d ' ') # This function sets the LC_APP variable by converting the value of the APP variable to lowercase and removing any spaces.
   var_app="$LC_APP-install"
-  INSTALLER_PATH="$CWD/install.sh"
-  echo "LC_APP $LC_APP"
-  echo "var_app $var_app"
-  echo "INSTALLER_PATH $INSTALLER_PATH"
+  INSTALLER_PATH="~/install.sh"
 }
 
 deb_upgrade() {
-  echo ">> Updating OS..."
-  apt update -qq
-  apt upgrade -y -qq
-  echo "<< Updated successfully!"
+  echo ">> Updating OS"
+  apt update &>/dev/null
+  apt upgrade -y &>/dev/null
+  echo "<< OS Updated successfully!"
 }
 
 # Prints info with ASCII
@@ -47,15 +44,25 @@ set_reboot_cron() {
 }
 
 podman_install() {
-  apt install -y podman docker-compose
+  echo ">> Installing Podman"
+  deb_upgrade
+  apt install -y podman docker-compose &>/dev/null
+  echo "<< Podman installed!"
+}
+
+docker_composer_install() {
+  echo ">> Installing Docker Compose"
+  deb_upgrade
+  apt install -y podman docker-compose &>/dev/null
+  echo "<< Docker Compose installed!"
 }
 
 podman_container_maintenance() {
-  # Pull latest images
-  podman pull "$PODMAN_IMAGE"
-  # Stop previously running containers
+  echo ">> pulling latest image..."
+  podman pull "$PODMAN_IMAGE" &>/dev/null || { echo "Failed to pull image: $PODMAN_IMAGE"; exit 1; }
+  echo ">> stopping..."
   podman stop -i "$PODMAN_NAME"
-  # Remove previously existing containers
+  echo ">> removing previous containers..."
   podman rm -i "$PODMAN_NAME"
 }
 
