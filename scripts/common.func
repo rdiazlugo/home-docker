@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
-
 variables() {
   LC_APP=$(echo ${APP,,} | tr -d ' ') # This function sets the LC_APP variable by converting the value of the APP variable to lowercase and removing any spaces.
   var_app="$LC_APP-install"
-  INSTALLER_PATH="~/$var_app.sh"
+  INSTALLER_PATH="$CWD/install.sh"
   echo "LC_APP $LC_APP"
   echo "var_app $var_app"
   echo "INSTALLER_PATH $INSTALLER_PATH"
