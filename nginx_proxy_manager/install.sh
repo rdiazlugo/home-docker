@@ -18,7 +18,7 @@ podman_install
 # Stop, delete current containers and pull latest version
 podman_container_maintenance
 # Create data folders if not existent
-mkdir -p data certs
+mkdir -p data letsencrypt
 
 # Run with Podman
 podman run -d \
@@ -27,7 +27,7 @@ podman run -d \
   --network host \
   --restart always \
   -v ./data:/data \
-  -v ./certs:/etc/letsencrypt \
+  -v ./letsencrypt:/etc/letsencrypt \
   "$PODMAN_IMAGE:$PODMAN_TAG"
 
 set_reboot_cron
