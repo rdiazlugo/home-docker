@@ -2,11 +2,12 @@
 
 Install by running this command in a terminal
 
-`wget https://raw.githubusercontent.com/rdiazlugo/home-docker/refs/heads/master/adguard/install.sh && sh install.sh`
+`wget https://raw.githubusercontent.com/rdiazlugo/home-docker/refs/heads/master/adguard/install.sh && bash install.sh`
 
 ## Requirements
 
 I usually run it in a Proxmox LXC Container with the following resources
+- OS: Debian 12
 - CPU: 1vCPU
 - RAM: 128MB
 - HDD: 2GB
