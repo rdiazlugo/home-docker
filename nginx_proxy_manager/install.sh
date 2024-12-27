@@ -23,6 +23,7 @@ mkdir -p data certs
 # Run with Podman
 podman run -d \
   --name "$PODMAN_NAME" \
+  --hostname "$PODMAN_NAME" \
   --network host \
   --restart always \
   -v ./data:/data \

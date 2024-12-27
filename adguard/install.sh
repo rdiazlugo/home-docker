@@ -25,6 +25,7 @@ mkdir -p data/conf
 # Run with Podman
 podman run -d \
   --name "$PODMAN_NAME" \
+  --hostname "$PODMAN_NAME" \
   --network host \
   --restart unless-stopped \
   -v ./data/work:/opt/adguardhome/work \
