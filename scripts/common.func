@@ -9,8 +9,8 @@ variables() {
 
 deb_upgrade() {
   echo ">> Updating OS..."
-  apt update &>/dev/null
-  apt upgrade -y &>/dev/null
+  apt update -qq
+  apt upgrade -y -qq
   echo "<< Updated successfully!"
 }
 

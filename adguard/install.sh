@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-apt install -y curl &>/dev/null
+echo ">> Updating OS and installing curl"
+apt update -qq
+apt upgrade -y -qq
+apt install -y -qq curl
+echo "<< Base setup done"
+
 source <(curl -s https://raw.githubusercontent.com/rdiazlugo/home-docker/refs/heads/master/scripts/common.func)
 
 # App Default Values
@@ -12,7 +17,6 @@ PODMAN_TAG="latest"
 variables
 
 # Update OS & Install Podman
-deb_upgrade
 podman_install
 
 #
@@ -30,4 +34,4 @@ podman run -d \
   -v ./data/conf:/opt/adguardhome/conf \
   "$PODMAN_IMAGE:$PODMAN_TAG"
 
-# set_reboot_cron
+set_reboot_cron
