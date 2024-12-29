@@ -67,3 +67,17 @@ podman_container_maintenance() {
   podman rm -i "$PODMAN_NAME"
 }
 
+check_environment_variable() {
+  echo ">> Checking ENV variable=$1"
+  # Check the parameter is not empty
+  if [ -z "$1" ]; then
+    echo "No ENV variable name provided."
+    exit 1
+  fi
+  local VAR_NAME=$1
+  # Check if any env variable with that name exists
+  if [ -z "${!VAR_NAME}" ]; then
+    echo "ENV variable $VAR_NAME is not set."
+    exit 1
+  fi
+}
