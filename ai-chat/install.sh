@@ -27,11 +27,11 @@ mkdir -p data
 podman run -d \
   --name "$PODMAN_NAME" \
   --hostname "$PODMAN_NAME" \
+  --env-file .env \
   --network host \
-  --restart unless-stoped \
-  # -p 3000:3000 \
-  -e "OPENAI_API_KEY=$OPENAI_API_KEY" \
+  --restart unless-stopped \
   -v ./data:/app/backend/data \
   "$PODMAN_IMAGE:$PODMAN_TAG"
 
+podman_images_cleanup
 set_reboot_cron
