@@ -7,6 +7,7 @@ APP="Nginx Proxy Manager"
 PODMAN_NAME="proxy"
 PODMAN_IMAGE="docker.io/jc21/nginx-proxy-manager"
 PODMAN_TAG="latest"
+INSTALLER_PATH="/root/install.sh"
 
 # Setup
 variables

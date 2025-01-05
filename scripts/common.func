@@ -1,7 +1,10 @@
 variables() {
   LC_APP=$(echo ${APP,,} | tr -d ' ') # This function sets the LC_APP variable by converting the value of the APP variable to lowercase and removing any spaces.
   var_app="$LC_APP-install"
-  INSTALLER_PATH="~/install.sh"
+  # check if INSTALLER_PATH exists, otherwise, use a default
+  if [ -z "$INSTALLER_PATH" ]; then
+    INSTALLER_PATH="~/install.sh"
+  fi
 }
 
 deb_upgrade() {
@@ -33,15 +36,6 @@ header_info() {
   cat <<EOF
 $ascii_art
 EOF
-}
-
-set_reboot_cron() {
-  if crontab -l | grep -q "@reboot $INSTALLER_PATH"; then
-    echo "Crontab already contains the script."
-  else
-    (crontab -l 2>/dev/null; echo "@reboot $INSTALLER_PATH") | crontab -
-    echo "Added crontab to run on startup"
-  fi
 }
 
 podman_install() {
@@ -84,5 +78,15 @@ check_environment_variable() {
   if [ -z "${!VAR_NAME}" ]; then
     echo "ENV variable $VAR_NAME is not set."
     exit 1
+  fi
+}
+
+set_reboot_cron() {
+  local CRON_SCRIPT="@reboot bash $INSTALLER_PATH"
+  if crontab -l | grep -q "$CRON_SCRIPT"; then
+    echo "Crontab already contains the script."
+  else
+    (crontab -l 2>/dev/null; echo "$CRON_SCRIPT") | crontab -
+    echo "Added crontab to run on startup"
   fi
 }
