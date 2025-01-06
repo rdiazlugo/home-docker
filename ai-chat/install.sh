@@ -14,8 +14,8 @@ header_info
 
 # Update OS & Install Podman
 podman_install
-# Check for OpenAI API Key
-check_environment_variable "OPENAI_API_KEY"
+# Check if .env file exists
+check_file_exists .env
 
 # Stop, delete current containers and pull latest version
 podman_container_maintenance

@@ -92,3 +92,10 @@ set_reboot_cron() {
     echo "Added crontab to run on startup"
   fi
 }
+
+check_file_exists() {
+  if [ ! -f "$1" ]; then
+    echo "File $1 not found."
+    exit 1
+  fi
+}
