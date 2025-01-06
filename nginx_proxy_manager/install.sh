@@ -32,3 +32,4 @@ podman run -d \
   "$PODMAN_IMAGE:$PODMAN_TAG"
 
 set_reboot_cron
+podman_images_cleanup

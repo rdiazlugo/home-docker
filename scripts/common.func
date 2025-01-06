@@ -64,7 +64,7 @@ podman_container_maintenance() {
 
 podman_images_cleanup() {
   echo ">> cleaning up unused images..."
-  podman image prune
+  podman image prune --force --all
   echo "<< done"
 }
 

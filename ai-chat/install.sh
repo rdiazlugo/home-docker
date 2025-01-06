@@ -33,5 +33,5 @@ podman run -d \
   -v ./data:/app/backend/data \
   "$PODMAN_IMAGE:$PODMAN_TAG"
 
-podman_images_cleanup
 set_reboot_cron
+podman_images_cleanup
