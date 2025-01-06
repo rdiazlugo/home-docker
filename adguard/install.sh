@@ -7,7 +7,6 @@ APP="AdGuard"
 PODMAN_NAME="adguard"
 PODMAN_IMAGE="docker.io/adguard/adguardhome"
 PODMAN_TAG="latest"
-INSTALLER_PATH="/root/install.sh"
 
 # Setup
 variables
@@ -34,3 +33,4 @@ podman run -d \
   "$PODMAN_IMAGE:$PODMAN_TAG"
 
 set_reboot_cron
+podman_images_cleanup

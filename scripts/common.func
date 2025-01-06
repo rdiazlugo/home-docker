@@ -3,7 +3,7 @@ variables() {
   var_app="$LC_APP-install"
   # check if INSTALLER_PATH exists, otherwise, use a default
   if [ -z "$INSTALLER_PATH" ]; then
-    INSTALLER_PATH="~/install.sh"
+    INSTALLER_PATH="/root/install.sh"
   fi
 }
 
@@ -59,11 +59,13 @@ podman_container_maintenance() {
   podman rm -i "$PODMAN_NAME"
   echo ">> pulling latest image..."
   podman pull "$PODMAN_IMAGE" &>/dev/null || { echo "Failed to pull image: $PODMAN_IMAGE"; exit 1; }
+  echo "<< container maintenance done"
 }
 
 podman_images_cleanup() {
   echo ">> cleaning up unused images..."
   podman image prune
+  echo "<< done"
 }
 
 check_environment_variable() {
