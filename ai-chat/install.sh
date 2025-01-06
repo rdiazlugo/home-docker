@@ -29,7 +29,7 @@ podman run -d \
   --hostname "$PODMAN_NAME" \
   --env-file .env \
   --network host \
-  --restart unless-stopped \
+  --restart always \
   -v ./data:/app/backend/data \
   "$PODMAN_IMAGE:$PODMAN_TAG"
 
