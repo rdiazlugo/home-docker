@@ -99,3 +99,19 @@ check_file_exists() {
     exit 1
   fi
 }
+
+podman_create_volume() {
+  echo ">> Creating volume..."
+  podman volume create "$1" 2>/dev/null
+}
+
+podman_compose_maintenance() {
+  echo ">> container maintenance..."
+  echo "stopping..."
+  podman-compose down
+  echo "removing previous containers..."
+  podman-compose rm -f
+  echo "pulling latest images..."
+  podman-compose pull
+  echo "<< container maintenance done"
+}
