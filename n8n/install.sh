@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 clear
-source <(wget -qO- https://raw.githubusercontent.com/rdiazlugo/home-docker/refs/heads/master/scripts/common.func)
+source <(wget -qO- https://raw.githubusercontent.com/rdiazlugo/home-docker/refs/heads/add-n8n/scripts/common.func)
 
 # App Default Values
 APP="n8n"
