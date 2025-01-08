@@ -39,25 +39,26 @@ EOF
 }
 
 podman_install() {
-  echo ">> Installing Podman"
   deb_upgrade
+  echo ">> Installing Podman"
   apt install -y podman &>/dev/null
   echo "<< Podman installed!"
 }
 
 podman_composer_install() {
-  echo ">> Installing Podman Compose"
   deb_upgrade
+  echo ">> Installing Podman Compose"
   apt install -y podman docker-compose &>/dev/null
   echo "<< Podman Compose installed!"
 }
 
 podman_container_maintenance() {
-  echo ">> stopping..."
+  echo ">> container maintenance..."
+  echo "stopping..."
   podman stop -i "$PODMAN_NAME"
-  echo ">> removing previous containers..."
+  echo "removing previous containers..."
   podman rm -i "$PODMAN_NAME"
-  echo ">> pulling latest image..."
+  echo "pulling latest image..."
   podman pull "$PODMAN_IMAGE" &>/dev/null || { echo "Failed to pull image: $PODMAN_IMAGE"; exit 1; }
   echo "<< container maintenance done"
 }
