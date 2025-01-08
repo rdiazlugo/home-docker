@@ -17,6 +17,10 @@ podman_install
 # Stop, delete current containers and pull latest version
 podman_container_maintenance
 
+# Create .env file from example if not existent
+if [ ! -f .env ]; then
+  wget --no-cache -O .env https://raw.githubusercontent.com/rdiazlugo/home-docker/refs/heads/add-n8n/n8n/.env.example
+fi
 # Check if .env file exists
 check_file_exists ".env"
 

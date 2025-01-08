@@ -11,5 +11,5 @@ wget --no-cache https://raw.githubusercontent.com/rdiazlugo/home-docker/refs/hea
 I usually run it in a Proxmox LXC Container with the following resources
 - OS: Debian 12
 - CPU: 1vCPU
-- RAM: 128MB
-- HDD: 2GB
+- RAM: 512MB
+- HDD: 4GB
