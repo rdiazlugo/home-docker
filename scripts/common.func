@@ -38,10 +38,32 @@ $ascii_art
 EOF
 }
 
+docker_add_repo() {
+  apt update &>/dev/null
+  apt install ca-certificates curl &>/dev/null
+  install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+  chmod a+r /etc/apt/keyrings/docker.asc
+
+  # Add the repository to Apt sources:
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    tee /etc/apt/sources.list.d/docker.list > /dev/null
+  apt update
+}
+
+docker_install() {
+  echo ">> Installing Docker"
+  docker_add_repo
+  apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 2>/dev/null
+  echo "<< Docker installed!"
+}
+
 podman_install() {
   deb_upgrade
   echo ">> Installing Podman"
-  apt install -y podman &>/dev/null
+  apt install -y podman podman-compose &>/dev/null
   echo "<< Podman installed!"
 }
 
