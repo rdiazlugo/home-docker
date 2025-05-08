@@ -1,5 +1,16 @@
 ## Setting up TrueNAS on a Proxmox server
 
+### Post install script
+- [Post PVE Install](https://community-scripts.github.io/ProxmoxVE/scripts?id=post-pve-install)
+- [Microcode](https://community-scripts.github.io/ProxmoxVE/scripts?id=microcode)
+- Add Powertop (./install-latest-powertop.sh) - [Examples](https://www.reddit.com/r/Proxmox/comments/1b8s8gd/comment/m1r0r72/)
+- Update the cron to run on start ([example](https://www.reddit.com/r/Proxmox/comments/1b8s8gd/comment/mbu2hc1/))
+  -
+-
+
+
+### Adding Disks to Truenas
+
 When TrueNAS is installed as a Guest in a Proxmox host, we need to pass the disks controllers to the guest.
 
 1. In Proxmox terminal, list the available disks and the model and serial: `lsblk -o +MODEL,SERIAL`
