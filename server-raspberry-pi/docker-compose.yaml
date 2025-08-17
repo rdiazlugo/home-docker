@@ -1,0 +1,23 @@
+services:
+  esphome:
+    container_name: esphome
+    image: 'ghcr.io/esphome/esphome:stable'
+    volumes:
+      - './esphome_config:/config'
+      - '/etc/localtime:/etc/localtime:ro'
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    environment:
+      USERNAME: '${ESPHOME_USERNAME}'
+      PASSWORD: '${ESPHOME_PASSWORD}'
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    volumes:
+      - ./ha_config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
