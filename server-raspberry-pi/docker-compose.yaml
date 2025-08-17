@@ -21,3 +21,23 @@ services:
     restart: unless-stopped
     privileged: true
     network_mode: host
+  zigbee2mqtt: # PORT: 8080
+    container_name: zigbee2mqtt
+    image: ghcr.io/koenkk/zigbee2mqtt
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+      - /run/udev:/run/udev:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8081:8080
+    environment:
+      - TZ=Europe/Berlin
+    devices:
+      # Replace with your actual USB device path
+      # Find it using: ls -la /dev/tty* or lsusb
+      - /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_627b71658a39ef119ef557f454516304-if00-port0:/dev/ttyACM0
+      # For Zigbee/Z-Wave dongles, you might need:
+      # - /dev/ttyACM0:/dev/ttyACM0
+      # For specific vendor devices:
+      # - /dev/serial/by-id/usb-Your_Device_ID:/dev/ttyUSB0
