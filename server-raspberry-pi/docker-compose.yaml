@@ -26,13 +26,11 @@ services:
     image: ghcr.io/koenkk/zigbee2mqtt
     restart: unless-stopped
     volumes:
-      - ./data:/app/data
+      - ./zigbee2mqtt_data:/app/data
       - /run/udev:/run/udev:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
       - 8081:8080
-    environment:
-      - TZ=Europe/Berlin
     devices:
       # Replace with your actual USB device path
       # Find it using: ls -la /dev/tty* or lsusb
@@ -41,3 +39,12 @@ services:
       # - /dev/ttyACM0:/dev/ttyACM0
       # For specific vendor devices:
       # - /dev/serial/by-id/usb-Your_Device_ID:/dev/ttyUSB0
+    environment:
+      - TZ=Europe/Berlin
+      - ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED=true
+      - ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC=zigbee2mqtt
+      - ZIGBEE2MQTT_CONFIG_MQTT_SERVER=${ZIGBEE2MQTT_CONFIG_MQTT_SERVER}
+      - ZIGBEE2MQTT_CONFIG_MQTT_USER=${ZIGBEE2MQTT_CONFIG_MQTT_USER}
+      - ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD=${ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD}
+      - ZIGBEE2MQTT_CONFIG_SERIAL_PORT=ember
+
