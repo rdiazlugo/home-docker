@@ -9,8 +9,8 @@ services:
     privileged: true
     network_mode: host
     environment:
-      USERNAME: ${ESPHOME_USERNAME}
-      PASSWORD: ${ESPHOME_PASSWORD}
+      - USERNAME=${ESPHOME_USERNAME}
+      - PASSWORD=${ESPHOME_PASSWORD}
   homeassistant:
     container_name: homeassistant
     image: ghcr.io/home-assistant/home-assistant:stable
@@ -40,12 +40,12 @@ services:
       # For specific vendor devices:
       # - /dev/serial/by-id/usb-Your_Device_ID:/dev/ttyUSB0
     environment:
-      TZ: Europe/Berlin
-      ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED: true
-      ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC: zigbee2mqtt
-      ZIGBEE2MQTT_CONFIG_MQTT_SERVER: ${ZIGBEE2MQTT_CONFIG_MQTT_SERVER}
-      ZIGBEE2MQTT_CONFIG_MQTT_USER: ${ZIGBEE2MQTT_CONFIG_MQTT_USER}
-      ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ${ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD}
+      - TZ="Europe/Berlin"
+      - ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED=${ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED}
+      - ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC=${ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC}
+      - ZIGBEE2MQTT_CONFIG_MQTT_SERVER=${ZIGBEE2MQTT_CONFIG_MQTT_SERVER}
+      - ZIGBEE2MQTT_CONFIG_MQTT_USER=${ZIGBEE2MQTT_CONFIG_MQTT_USER}
+      - ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD=${ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD}
   mosquitto:
     image: eclipse-mosquitto
     environment:
