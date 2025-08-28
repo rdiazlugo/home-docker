@@ -9,9 +9,9 @@ variables() {
 
 deb_upgrade() {
   echo ">> Updating OS"
-  apt update &>/dev/null
-  apt upgrade -y &>/dev/null
-  apt autoremove -y &>/dev/null
+  apt update 1>/dev/null
+  apt upgrade -y 1>/dev/null
+  apt autoremove -y 1>/dev/null
   echo "<< OS Updated successfully!"
 }
 
@@ -20,10 +20,10 @@ deb_upgrade() {
 header_info() {
   if [ -f /etc/debian_version ]; then
     # Debian/Ubuntu
-    apt-get install -y figlet &> /dev/null
+    apt-get install -y figlet 1> /dev/null
   elif [ -f /etc/alpine-release ]; then
     # Alpine Linux
-    apk add --no-cache figlet ncurses &> /dev/null
+    apk add --no-cache figlet ncurses 1> /dev/null
     export TERM=xterm
   else
     echo "Unsupported OS"
@@ -39,8 +39,8 @@ EOF
 }
 
 docker_add_repo() {
-  apt update &>/dev/null
-  apt install ca-certificates curl &>/dev/null
+  apt update 1>/dev/null
+  apt install ca-certificates curl 1>/dev/null
   install -m 0755 -d /etc/apt/keyrings
   curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
   chmod a+r /etc/apt/keyrings/docker.asc
@@ -49,28 +49,28 @@ docker_add_repo() {
   echo \
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    tee /etc/apt/sources.list.d/docker.list > /dev/null
+    tee /etc/apt/sources.list.d/docker.list 1> /dev/null
   apt update
 }
 
 docker_install() {
   echo ">> Installing Docker"
   docker_add_repo
-  apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 2>/dev/null
+  apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 1>/dev/null
   echo "<< Docker installed!"
 }
 
 podman_install() {
   deb_upgrade
   echo ">> Installing Podman"
-  apt install -y podman podman-compose &>/dev/null
+  apt install -y podman podman-compose 1>/dev/null
   echo "<< Podman installed!"
 }
 
 podman_composer_install() {
   deb_upgrade
   echo ">> Installing Podman Compose"
-  apt install -y podman docker-compose &>/dev/null
+  apt install -y podman docker-compose 1>/dev/null
   echo "<< Podman Compose installed!"
 }
 
@@ -81,7 +81,7 @@ podman_container_maintenance() {
   echo "removing previous containers..."
   podman rm -i "$PODMAN_NAME"
   echo "pulling latest image..."
-  podman pull "$PODMAN_IMAGE" &>/dev/null || { echo "Failed to pull image: $PODMAN_IMAGE"; exit 1; }
+  podman pull "$PODMAN_IMAGE" 1>/dev/null || { echo "Failed to pull image: $PODMAN_IMAGE"; exit 1; }
   echo "<< container maintenance done"
 }
 
@@ -111,7 +111,7 @@ set_reboot_cron() {
   if crontab -l | grep -q "$CRON_SCRIPT"; then
     echo "Crontab already contains the script."
   else
-    (crontab -l 2>/dev/null; echo "$CRON_SCRIPT") | crontab -
+    (crontab -l 1>/dev/null; echo "$CRON_SCRIPT") | crontab -
     echo "Added crontab to run on startup"
   fi
 }
@@ -125,7 +125,7 @@ check_file_exists() {
 
 podman_create_volume() {
   echo ">> Creating volume..."
-  podman volume create "$1" 2>/dev/null
+  podman volume create "$1" 1>/dev/null
 }
 
 podman_compose_maintenance() {
