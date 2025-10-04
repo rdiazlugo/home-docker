@@ -1,0 +1,30 @@
+
+# Global options block
+{
+  debug
+  # Email for Let's Encrypt notifications
+  email hi@rdiazlugo.dev
+
+  # Use production ACME server
+  acme_ca https://acme-v02.api.letsencrypt.org/directory
+
+  dns cloudflare ${env.CLOUDFLARE_API_TOKEN}
+
+  # Security settings
+  # auto_https on
+
+}
+
+
+adguard.home.rdiazlugo.dev {
+  reverse_proxy 192.168.0.2:8000
+}
+
+coolify.home.rdiazlugo.dev {
+  reverse_proxy 192.168.1.22:8000
+}
+
+ha.home.rdiazlugo.dev {
+  reverse_proxy 192.168.0.2:8123
+}
+
