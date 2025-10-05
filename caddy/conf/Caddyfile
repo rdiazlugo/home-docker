@@ -11,7 +11,7 @@
   dns cloudflare {env.CLOUDFLARE_API_TOKEN}
 
   # Security settings
-  # auto_https on
+  auto_https on
 
 }
 
