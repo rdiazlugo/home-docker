@@ -8,7 +8,7 @@
   # Use production ACME server
   acme_ca https://acme-v02.api.letsencrypt.org/directory
 
-  dns cloudflare ${env.CLOUDFLARE_API_TOKEN}
+  dns cloudflare {env.CLOUDFLARE_API_TOKEN}
 
   # Security settings
   # auto_https on
