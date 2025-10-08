@@ -1,4 +1,3 @@
-
 # Global options block
 {
   debug
@@ -6,12 +5,23 @@
   email hi@rdiazlugo.dev
 
   # Use production ACME server
-  acme_ca https://acme-v02.api.letsencrypt.org/directory
+  # acme_ca https://acme-v02.api.letsencrypt.org/directory
 
-  dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+  cert_issuer acme {
+    # DNS provider for DNS-01 challenges
+    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+
+    # Disable other challenge types
+    disable_http_challenge
+    disable_tlsalpn_challenge
+
+    # Optional: increase propagation timeout if needed
+    propagation_timeout 5m
+    propagation_delay 30s
+  }
 
   # Security settings
-  auto_https on
+  # auto_https on
 
 }
 
@@ -20,11 +30,83 @@ adguard.home.rdiazlugo.dev {
   reverse_proxy 192.168.0.2:8000
 }
 
+# Coolify - Main dashboard with WebSocket support
 coolify.home.rdiazlugo.dev {
-  reverse_proxy 192.168.1.22:8000
+  reverse_proxy 192.168.1.22:8000 {
+      # Essential headers for Coolify
+      header_up Host {upstream_hostport}
+      header_up X-Real-IP {remote_host}
+      header_up X-Forwarded-For {remote_host}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
+      # WebSocket support (required for real-time features)
+      header_up Connection {>Connection}
+      header_up Upgrade {>Upgrade}
+
+      # Longer timeouts for Coolify operations
+      transport http {
+        read_timeout 300s
+        write_timeout 300s
+        keepalive 5m
+      }
+  }
+
+  # Enable compression
+  encode gzip
 }
 
 ha.home.rdiazlugo.dev {
   reverse_proxy 192.168.0.2:8123
 }
 
+esp.home.rdiazlugo.dev {
+  reverse_proxy 192.168.0.2:6052
+}
+
+fritz.home.rdiazlugo.dev router.home.rdiazlugo.dev {
+  reverse_proxy 192.168.0.1:80
+}
+
+lab.home.rdiazlugo.dev {
+  reverse_proxy https://192.168.0.3:8006 {
+    # Skip TLS verification for self-signed certificate
+    transport http {
+      tls_insecure_skip_verify
+    }
+  }
+}
+
+lab2.home.rdiazlugo.dev {
+  reverse_proxy https://192.168.0.4:8006 {
+    # Skip TLS verification for self-signed certificate
+    transport http {
+      tls_insecure_skip_verify
+    }
+  }
+}
+
+n8n.home.rdiazlugo.dev {
+  reverse_proxy 192.168.1.6:5678 {
+    header_up Host {upstream_hostport}
+    header_up X-Real-IP {remote_host}
+    header_up X-Forwarded-For {remote_host}
+    header_up X-Forwarded-Proto {scheme}
+    header_up X-Forwarded-Host {host}
+  }
+}
+
+nas.home.rdiazlugo.dev {
+  reverse_proxy 192.168.1.10:80
+}
+
+tipi.home.rdiazlugo.dev {
+  reverse_proxy 192.168.1.8:80
+}
+
+web-ui.home.rdiazlugo.dev {
+  reverse_proxy 192.168.1.5:8080
+}
+
+zigbee2mqtt.home.rdiazlugo.dev {
+  reverse_proxy 192.168.0.2:8081
+}
