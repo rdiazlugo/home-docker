@@ -14,8 +14,8 @@ services:
       - "53:53/tcp"
       - "53:53/udp"
       # DHCP
-      - "67:67/udp"
-      - "68:68/udp"
+      # - "67:67/udp"
+      # - "68:68/udp"
       # HTTP/HTTPS
       - "3000:80/tcp"
       # - "8443:443/tcp"
