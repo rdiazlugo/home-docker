@@ -7,6 +7,8 @@ services:
     volumes:
       - ./adguard_work:/opt/adguardhome/work
       - ./adguard_conf:/opt/adguardhome/conf
+    # Better to disabled mode host, keep using port 3000 to have Caddy use ports 80, 81 and 443
+    # network_mode: host
     ports: # host:container
       # DNS
       - "53:53/tcp"
@@ -15,10 +17,10 @@ services:
       - "67:67/udp"
       - "68:68/udp"
       # HTTP/HTTPS
-      - "8000:80/tcp"
-      - "8443:443/tcp"
-      - "8443:443/udp"
-      - "3000:3000/tcp"
+      - "3000:80/tcp"
+      # - "8443:443/tcp"
+      # - "8443:443/udp"
+      # - "3000:3000/tcp"
       # DNS over TLS
       - "853:853/tcp"
       # DNS over QUIC
