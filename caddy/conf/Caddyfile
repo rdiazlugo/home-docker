@@ -32,17 +32,8 @@ adguard.home.rdiazlugo.dev {
 
 # Coolify - Main dashboard with WebSocket support
 coolify.home.rdiazlugo.dev {
-  reverse_proxy 192.168.1.22:8000 {
-      # Longer timeouts for Coolify operations
-      transport http {
-        read_timeout 300s
-        write_timeout 300s
-        keepalive 5m
-      }
-  }
-
-  # Enable compression
-  encode gzip
+  reverse_proxy 192.168.1.22:8000
+  reverse_proxy 192.168.1.22:6001
 }
 
 ha.home.rdiazlugo.dev {
