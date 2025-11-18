@@ -33,16 +33,6 @@ adguard.home.rdiazlugo.dev {
 # Coolify - Main dashboard with WebSocket support
 coolify.home.rdiazlugo.dev {
   reverse_proxy 192.168.1.22:8000 {
-      # Essential headers for Coolify
-      header_up Host {upstream_hostport}
-      header_up X-Real-IP {remote_host}
-      header_up X-Forwarded-For {remote_host}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-      # WebSocket support (required for real-time features)
-      header_up Connection {>Connection}
-      header_up Upgrade {>Upgrade}
-
       # Longer timeouts for Coolify operations
       transport http {
         read_timeout 300s
