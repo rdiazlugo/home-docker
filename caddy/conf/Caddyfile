@@ -32,8 +32,22 @@ adguard.home.rdiazlugo.dev {
 
 # Coolify - Main dashboard with WebSocket support
 coolify.home.rdiazlugo.dev {
+  # WebSockets for APP RTC
+  @echo_ws {
+    path /app/*
+  }
+
+  # WebSockets for terminal
+  @terminal_ws {
+      path /terminal/ws
+  }
+  reverse_proxy @echo_ws     192.168.1.22:6001
+  reverse_proxy @terminal_ws 192.168.1.22:6002
+  # Web UI
   reverse_proxy 192.168.1.22:8000
-  reverse_proxy 192.168.1.22:6001
+  # extra
+	encode zstd gzip
+	header X-Robots "noindex, nofollow"
 }
 
 ha.home.rdiazlugo.dev {
