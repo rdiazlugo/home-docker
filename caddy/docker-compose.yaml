@@ -1,6 +1,7 @@
 services:
   caddy:
-    build: .
+    # https://github.com/rdiazlugo/caddy
+    image: ghcr.io/rdiazlugo/caddy:latest
     restart: unless-stopped
     ports:
       - "80:80"
